@@ -41,7 +41,15 @@ I'll use the basic steps I would use to construct the sample chart and turn each
 #### System steps:
 
 1. Get input - cut lengths and cut quantities
-2. Get input - bar length
+2. Get input - bar length and bar quantities
+3. Start with longest cuts first, subtract cut from bar until result is below zero (include kere with each cut)
+4. If remaining bar length has enough leftover, use the next biggest cut until the bar is too small
+5. Repeat process until all cuts have been accounted for.
+6. Add up leftover scrap for each piece.
+7. Display results to user. Emphasize # of bars, # of cuts for each cut length and scrap.
+8. Emphasize bar length and total # of bars needed for user.
+9. Offer user to fix any input.
+10. Offer user ability to copy, save (or print) results.
 
 ### UI Decisions
 
