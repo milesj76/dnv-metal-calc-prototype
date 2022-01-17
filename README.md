@@ -15,13 +15,13 @@ Let's look at a basic game plan for this:
 
 ### Understanding the problem
 
-This process is meant to calculate how many pieces of varying sizes can be cut from a larger piece of steel of varied size as well.
+This process is meant to calculate how many pieces of varying sizes can be cut from a larger piece of steel. This larger piece can also vary in size.
 
 _INSERT SCREENSHOT HERE_
 
-DNV purchases long pieces of steel commonly referred to as _"bars"_ or _"lengths."_ For the sake of clarity, I'm going refer to these pieces as "bars". These bars are are already made into certain shapes and sizes and can be purchased in different lengths (see why I'm using _"bars"_?). 
+DNV purchases long pieces of steel commonly referred to as _"bars"_ or _"lengths."_ For the sake of clarity, I'm going refer to these pieces as "bars". These bars are already made into certain shapes and sizes and can be purchased in different lengths (see why I'm using _"bars"_?). 
 
-The bars are to cut into smaller pieces and will be referred to as _"cuts"_ or _"pieces"_. Depending on the job, DNV may order a bar different lengths to get the most out of their purchases. The length of cuts needed and quantity of said cuts are listed. They use a system to calculate how many bars to purchase and how many cuts/pieces they get out of each bar.
+The bars are to be cut into smaller pieces and will be referred to as _"cuts"_ or _"pieces"_. Depending on the job, DNV may order different lengths of bars to get the most out of their purchases. The length of cuts needed and quantity of said cuts are listed. DNV has a basic system to calculate how many bars they should purchase and how many cuts of different sizes they can get out of each bar.
 
 The _"kere"_, the space between each cut, is also noted and added into the calculations.
 
@@ -33,7 +33,7 @@ I'll use the lengths in the provided sample chart in order to calculate.
 
 For this project, I'm going to attempt to use as much TypeScript as possible to make use of type checks. There will be lots of data being passed around so it should help to prevent and locate bugs.
 
-I should also consider using Big Decimal to get more precise results since we're calculating out to three decimals.
+I should also consider using `decimal.js` to get more precise results since we're calculating out to three decimals.
 
 I'll use the basic steps I would use to construct the sample chart and turn each step into its own function. After getting a basic version I'll see if I can refactor the code. What's important right now is function, not performance. I'll do my best to construct each function to take any values so that the program can accept any bar length, bar quantity, cut length, cut quantity and kere.
 
