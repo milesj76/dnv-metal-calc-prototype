@@ -1,37 +1,45 @@
 <script>
+  import { writable, get } from 'svelte/store'
+
   import CutsCard from "./CutsCard.svelte"
 
   // Cuts array of objects
   let cut1 = {
-    id: 1,
+    id: 0,
     length: 72.772,
     quantity: 4
   }
   let cut2 = {
-    id: 2,
+    id: 1,
     length: 37.750,
     quantity: 4
   }
   let cut3 = {
-    id: 3,
+    id: 2,
     length: 51.371,
     quantity: 4
   }
   let cut4 = {
-    id: 4,
+    id: 3,
     length: 17.726,
     quantity: 4
   }
 
-  let cuts = [cut1, cut2, cut3, cut4]
+  const cuts = writable([])
+  // const cuts = writable([cut1, cut2, cut3, cut4])
 
   let barLength = 240
   let barTotal
   let kere = 0.187
+
+  const addCut = () => {
+    let cutsLength = get(cuts).length
+    cuts.update(arr => [...arr, { id: cutsLength, length: 0, quantity: 0 }])
+  }
 </script>
 
 <section>
-  <form>
+  <form on:submit|preventDefault>
     <div class="row-container">
       <div class="row">
         <p>Bar length</p><input type="text" bind:value={barLength}>
@@ -43,11 +51,11 @@
     <div class="cuts-container">
       <h2>Cuts</h2>
       <div class="add-cuts">
-        {#each cuts as cut}
+        {#each $cuts as cut}
           <CutsCard cut={cut} />
         {/each}
-        <div class="btn"><button>+ Add Cut</button></div>
       </div>
+      <div class="btn"><button on:click={addCut}>+ Add Cut</button></div>
     </div>
   </form>
 </section>
@@ -66,6 +74,7 @@
 
   .row-container {
     display: flex;
+    max-height: 50vh;
   }
 
   .row-container > .row {
@@ -87,13 +96,12 @@
 
   .add-cuts {
     border: 1px solid #444;
-    border-top: none;
     overflow-y: auto;
     min-height: 0px;
+    max-height: 60vh;
   }
 
   .btn {
-    border-top: solid 1px #444;
     padding: 1rem;
   }
 
