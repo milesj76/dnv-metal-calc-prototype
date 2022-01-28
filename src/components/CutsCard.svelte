@@ -1,12 +1,19 @@
 <script lang="ts">
   import type { Cut } from '../model/types'
+  import { Icon, XCircle } from 'svelte-hero-icons'
+
   export let cut
 
   const {id, length, quantity}: Cut = cut
 </script>
 
 <div class="card-container">
-  <small>Cut #{id + 1}</small>
+  <div class="top-row">
+    <small>#{id + 1}</small>
+    <div class="icon">
+      <Icon src={XCircle} solid size="25" />
+    </div>
+  </div>
   <div class="row">
     <p>Cut Length</p>
     <input value={length} />
@@ -19,12 +26,14 @@
 
 <style>
   .card-container {
-    padding: 1.2rem 2.5rem;
-    padding-top: 0.4rem;
+    padding: 1rem 1.5rem;
+    /* padding-top: 0.7rem; */
     border-bottom: 1px solid #444;
     text-align: right;
 
     background: rgb(245, 245, 245);
+
+    transition-duration: 80ms;
   }
 
   .card-container:hover {
@@ -36,10 +45,34 @@
     font-style: italic;
   }
 
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    padding-bottom: 0.5rem;
+  }
+
+  .icon {
+    /* color: rgb(206, 7, 23); */
+    
+    transition-duration: 150ms;
+  }
+  
+  .icon:hover {
+    transform: scale(1.05);
+    color: rgb(189, 13, 27);
+  }
+
   .row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    /* Adds different width between top row and other content. */
+    padding: 0 1rem;
+    height: 2.5rem;
   }
 
   input {
