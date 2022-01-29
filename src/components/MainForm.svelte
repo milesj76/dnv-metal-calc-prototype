@@ -1,5 +1,6 @@
 <script>
-  import { writable, get } from 'svelte/store'
+  import { get } from 'svelte/store'
+  import { cuts, addCut } from '../model/store'
 
   import CutsCard from "./CutsCard.svelte"
 
@@ -25,16 +26,16 @@
     quantity: 4
   }
 
-  const cuts = writable([])
+  // const cuts = writable([])
   // const cuts = writable([cut1, cut2, cut3, cut4])
 
   let barLength = 240
   let barTotal
   let kere = 0.187
 
-  const addCut = () => {
-    let cutsLength = get(cuts).length
-    cuts.update(arr => [...arr, { id: cutsLength, length: 0, quantity: 0 }])
+  const testValues = () => {
+    console.log('MainForm.cuts', $cuts);
+    console.log('MainForm.string', JSON.stringify($cuts, null, 2));
   }
 </script>
 
@@ -55,7 +56,8 @@
           <CutsCard cut={cut} />
         {/each}
       </div>
-      <div class="btn"><button on:click={addCut}>+ Add Cut</button></div>
+      <div class="btn"><button on:click={() => addCut()}>+ Add Cut</button></div>
+      <div class="btn"><button on:click={testValues}>Check values</button></div>
     </div>
   </form>
 </section>
@@ -98,7 +100,7 @@
     border: 1px solid #444;
     overflow-y: auto;
     min-height: 0px;
-    max-height: 60vh;
+    max-height: 55vh;
   }
 
   .btn {
