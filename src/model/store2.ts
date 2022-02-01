@@ -41,8 +41,8 @@ export const addCut = action(cuts, "addCut", (store) => {
 
 // Pass in strings so that we keep the number parsing logic in the store
 type NewCut = {
-  length: string
-  quantity: string
+  length: string | number
+  quantity: string | number
 }
 
 export const addCutWithValues = action(
@@ -124,7 +124,7 @@ type NumberField = "length" | "quantity"
 
 // Call these functions whenever you want parse/format numbers
 // That way you can keep all the logic in one place
-function parseNumber(value: string, field: NumberField) {
+function parseNumber(value: string | number, field: NumberField) {
   if (isNaN(Number(value))) {
     console.error(`${field} is not a valid number`, value)
   }
@@ -132,10 +132,12 @@ function parseNumber(value: string, field: NumberField) {
   switch (field) {
     case "length":
       // Convert to float with 3 decimal places
-      return parseFloat(parseFloat(value).toFixed(3))
+      // By always converting to a string,
+      // We can handle both strings & numbers, and use .toFixed()
+      return parseFloat(parseFloat(`${value}`).toFixed(3))
     case "quantity":
       // Convert to int
-      return parseInt(value)
+      return parseInt(`${value}`)
     default:
       console.error(`Field: ${field} not found for value:`, value)
   }
