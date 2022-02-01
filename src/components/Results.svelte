@@ -1,7 +1,7 @@
 <script>
   // This is the container for the results components
 
-  import { cuts } from "../model/store2"
+  import { cuts, results } from "../model/store2"
 </script>
 
 <section>
@@ -11,12 +11,11 @@
       <div class="btn-selector" id="detail">Detail</div>
       <div class="btn-selector" id="table">Table</div>
     </div>
-    <!-- {#each $cuts as { length, quantity }}
+    {#each $results as result}
       <div>
-        <div>{length}</div>
-        <div>{quantity}</div>
+        {result}
       </div>
-    {/each} -->
+    {/each}
     <div class="code">
       {JSON.stringify($cuts, null, 2)}
     </div>
