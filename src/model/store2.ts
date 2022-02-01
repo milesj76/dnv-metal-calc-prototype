@@ -1,4 +1,4 @@
-import { map, computed, action, atom, onMount } from "nanostores"
+import { action, atom, computed } from "nanostores"
 import type { Cut } from "./types"
 
 // keep track of IDs here
@@ -22,26 +22,47 @@ export const cuts = atom<Cut[]>(initialCuts)
 // 1. ADD CUT
 //
 
-// Pass in strings so that we keep the number parsing logic in the store
-type NewCut = {
-  length: string
-  quantity: string
-}
-
-export const addCut = action(cuts, "addCut", (store, newCut: NewCut) => {
+export const addCut = action(cuts, "addCut", (store) => {
   // increment id
   idCounter++
 
   // create new cut object
   const newCutWithId: Cut = {
     id: idCounter,
-    length: parseNumber(newCut.length, "length"),
-    quantity: parseNumber(newCut.quantity, "quantity"),
+    length: 0,
+    quantity: 0,
   }
 
   // set the store to cuts + new cut
   store.set([...store.get(), newCutWithId])
 })
+
+// Here is how you would write an addCut function where you could pass in values
+
+// Pass in strings so that we keep the number parsing logic in the store
+type NewCut = {
+  length: string
+  quantity: string
+}
+
+export const addCutWithValues = action(
+  cuts,
+  "addCut",
+  (store, newCut: NewCut) => {
+    // increment id
+    idCounter++
+
+    // create new cut object
+    const newCutWithId: Cut = {
+      id: idCounter,
+      length: parseNumber(newCut.length, "length"),
+      quantity: parseNumber(newCut.quantity, "quantity"),
+    }
+
+    // set the store to cuts + new cut
+    store.set([...store.get(), newCutWithId])
+  }
+)
 
 //
 // 2. REMOVE CUT
