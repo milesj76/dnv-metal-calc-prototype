@@ -142,3 +142,13 @@ function parseNumber(value: string | number, field: NumberField) {
       console.error(`Field: ${field} not found for value:`, value)
   }
 }
+
+// 4. RESULTS
+
+export const results = computed(cuts, (store) => {
+  return store.map((cut) => {
+    // Do all the math you want to do here,
+    // but for now we'll just return as a string
+    return `${cut.length} × ${cut.quantity}`
+  })
+})
