@@ -155,6 +155,16 @@ export const results = computed(cuts, (store) => {
 
 // 5. CLEAR ALL CUTS
 
-export const clearAllCuts = () => {
-  console.log('clearAllCuts');
-}
+export const clearAllCuts = action(cuts, "clearAllCuts", (store) => {
+  // console.log('clearAllCuts');
+
+  // delete all the cuts
+  idCounter++
+
+  store.set([{
+    id: idCounter,
+    length: 0,
+    quantity: 0,
+  }])
+
+})
