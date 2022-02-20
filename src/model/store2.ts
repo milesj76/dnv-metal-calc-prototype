@@ -146,6 +146,53 @@ function parseNumber(value: string | number, field: NumberField) {
 // 4. RESULTS
 
 export const results = computed(cuts, (store) => {
+
+  // Need to show quantity of BARS needed to make all cuts
+  // 4 Bars needed at 240" length
+
+  // INPUT: 72.772" x 4 cuts
+  // INPUT: 240" bar
+  // INPUT: 0.187 kere
+  // INPUT: $ per bar
+
+  // OUTPUT: 240" bars x 2
+  // SCRAP: x" of scrap
+  // COST: $x for y bars at z length
+
+  // How to get BARS result
+  // solve with DNValgorithm
+  // Sort cuts by length (long -> small)
+  
+  let sortedCuts = [...store].sort(function (a, b) { return b.length - a.length });
+  
+  const barLength = 240
+  const kere = 0.187
+  // @TODO: Replace these with actual inputs
+  
+  let totalBars = 1;
+
+  let totalCutLength = (sortedCuts[0].quantity * sortedCuts[0].length) + (sortedCuts[0].quantity * kere)
+  
+  let remainingLength = barLength
+
+  // This goes through all cuts and subtracts them from bars + totals up bars
+  for (let i = 0; i < sortedCuts.length; i++) {
+    for (let j = 0; j < sortedCuts[i].quantity; j++) {
+      if (sortedCuts[i].length > remainingLength) {
+        // Move on to next bar
+        totalBars++
+        remainingLength = barLength
+        // TODO: Add remaining left to scrap
+      }
+      // Always subrtract length
+      remainingLength = remainingLength - (sortedCuts[i].length + kere)
+    }
+    // if (sortedCuts[i].quantity === 0) continue
+  }
+  
+  console.log("totalBars", totalBars);
+  
+
   return store.map((cut) => {
     // Do all the math you want to do here,
     // but for now we'll just return as a string
