@@ -18,9 +18,9 @@ ALT+D to complete
 
   ## Main Form:
   - [x] update cuts store values when changed
-  - [ ] add "clear all" button to cuts
+  - [x] add "clear all" button to cuts
   - [x] make "delete cut" button work
-  
+
   ## Detailed Results:
   - [ ] create "sample results" to present data
   - [ ] choose a presentation of results that is as simple/intuitive to understand
