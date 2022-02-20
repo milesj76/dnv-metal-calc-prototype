@@ -1,6 +1,5 @@
 <script>
-  import { get } from 'svelte/store'
-  import { cuts, addCut } from '../model/store'
+  import { cuts, addCut, addCutWithValues } from "../model/store2"
 
   import CutsCard from "./CutsCard.svelte"
 
@@ -8,22 +7,22 @@
   let cut1 = {
     id: 0,
     length: 72.772,
-    quantity: 4
+    quantity: 4,
   }
   let cut2 = {
     id: 1,
-    length: 37.750,
-    quantity: 4
+    length: 37.75,
+    quantity: 4,
   }
   let cut3 = {
     id: 2,
     length: 51.371,
-    quantity: 4
+    quantity: 4,
   }
   let cut4 = {
     id: 3,
     length: 17.726,
-    quantity: 4
+    quantity: 4,
   }
 
   // const cuts = writable([])
@@ -34,32 +33,50 @@
   let kere = 0.187
 
   const testValues = () => {
-    console.log('MainForm.cuts', $cuts);
-    console.log('MainForm.string', JSON.stringify($cuts, null, 2));
+    console.log("MainForm.cuts", $cuts)
+    console.log("MainForm.string", JSON.stringify($cuts, null, 2))
+  }
+
+  const addTestValues = () => {
+    addCutWithValues(cut1)
+    addCutWithValues(cut2)
+    addCutWithValues(cut3)
+    addCutWithValues(cut4)
   }
 </script>
 
 <section>
-  <form on:submit|preventDefault>
+  <!-- This form makes hitting "enter" be weird so I temporarily commented it out -->
+  <!-- <form on:submit|preventDefault> -->
+  <div>
     <div class="row-container">
       <div class="row">
-        <p>Bar length</p><input type="text" bind:value={barLength}>
+        <p>Bar length</p>
+        <input type="text" bind:value={barLength} />
       </div>
       <div class="row">
-        <p>Kere</p><input type="text" bind:value={kere}>
+        <p>Kere</p>
+        <input type="text" bind:value={kere} />
       </div>
     </div>
     <div class="cuts-container">
       <h2>Cuts</h2>
+      <div class="btn">
+        <button on:click={() => addCut()}>+ Add Cut</button>
+        <button on:click={addTestValues}>Add test values</button>
+      </div>
+
       <div class="add-cuts">
-        {#each $cuts as cut}
-          <CutsCard cut={cut} />
+        <!-- adding `(cut.id)` tells svelte to use the id as the key -->
+        <!-- checkout: https://svelte.dev/tutorial/keyed-each-blocks for more info -->
+        {#each $cuts as cut, index (cut.id)}
+          <CutsCard {cut} {index} />
         {/each}
       </div>
-      <div class="btn"><button on:click={() => addCut()}>+ Add Cut</button></div>
       <div class="btn"><button on:click={testValues}>Check values</button></div>
     </div>
-  </form>
+  </div>
+  <!-- </form> -->
 </section>
 
 <style>
