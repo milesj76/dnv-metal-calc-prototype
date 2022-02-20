@@ -1,5 +1,5 @@
 <script>
-  import { cuts, addCut, addCutWithValues } from "../model/store2"
+  import { cuts, addCut, addCutWithValues, clearAllCuts } from "../model/store2"
 
   import CutsCard from "./CutsCard.svelte"
 
@@ -64,6 +64,7 @@
       <div class="btn">
         <button on:click={() => addCut()}>+ Add Cut</button>
         <button on:click={addTestValues}>Add test values</button>
+        <button on:click={clearAllCuts}>Clear All</button>
       </div>
 
       <div class="add-cuts">
