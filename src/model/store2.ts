@@ -152,3 +152,9 @@ export const results = computed(cuts, (store) => {
     return `${cut.length} × ${cut.quantity}`
   })
 })
+
+// 5. CLEAR ALL CUTS
+
+export const clearAllCuts = () => {
+  console.log('clearAllCuts');
+}
