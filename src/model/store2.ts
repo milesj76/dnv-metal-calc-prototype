@@ -145,7 +145,8 @@ function parseNumber(value: string | number, field: NumberField) {
 
 // 4. RESULTS
 
-export const results = computed(cuts, (store) => {
+// V1 RESULTS ( NOT ACCURATE )
+export const results0 = computed(cuts, (store) => {
 
   // Need to show quantity of BARS needed to make all cuts
   // 4 Bars needed at 240" length
@@ -165,9 +166,9 @@ export const results = computed(cuts, (store) => {
   
   let sortedCuts = [...store].sort(function (a, b) { return b.length - a.length });
   
+  // @TODO: Replace these with actual inputs
   const barLength = 240
   const kere = 0.187
-  // @TODO: Replace these with actual inputs
   
   let totalBars = 1;
 
@@ -199,6 +200,73 @@ export const results = computed(cuts, (store) => {
     return `${cut.length} × ${cut.quantity}`
   })
 })
+
+
+
+
+// V2 RESULTS
+// https://siongui.github.io/2017/04/16/css-only-transpose-html-table/
+// ^^^ Invert rows and columns!
+
+export const results = computed(cuts, (store) => {
+
+  // Sort cuts by length
+  let sortedCuts = [...store].sort(function (a, b) { return b.length - a.length });
+
+  console.log('sortedCuts', sortedCuts);
+  
+  /**
+   * Organize results in array
+   * Because all are organized in terms of length, array values can be oganized by length
+   * Each element in array will represent one bar
+   * Single element = [0, 3, 0, 0, 1]
+   * meta element = [barN, qtyCut1, qtyCut2, qtyCut3, qtyCut4]
+   * 
+   * Use the table inversion to simplify the results
+   * tableArray = [bar1AndCuts, bar2AndCuts, bar3AndCuts, ...remainingCuts]
+   */
+
+  const barLength = 240;
+  let totalBars = 1;
+  let allBars = [];
+
+  // I need the quantities for each cut in order of size
+  // use sortedCuts in order
+  let totalQuantities: number[] = [];
+  for (let i = 0; i < sortedCuts.length; i++) {
+    totalQuantities.push(sortedCuts[i].quantity)
+  }
+  console.log('totalQuantities', totalQuantities);
+
+  // I need to start making cuts from bars
+  // Create a loop that subtracts cuts that fit in a remaining bar length
+  let remainingBarLength = barLength;
+
+  function checkRemainingCuts(cutIndex) {
+    let neededCuts = totalQuantities[cutIndex]
+    let cutsSoFar = 0;
+
+    // total up cuts for length @ cutIndex
+    if (allBars.length > 0) {
+      for (let i = 0; i < allBars.length; i++) {
+        cutsSoFar = cutsSoFar + allBars[i][cutIndex];
+      }
+    }
+
+    // return remaining cuts!
+    return neededCuts - cutsSoFar
+  }
+
+  return store.map((cut) => {
+    // Do all the math you want to do here,
+    // but for now we'll just return as a string
+    return `${cut.length} × ${cut.quantity}`
+  })
+})
+
+
+
+
 
 // 5. CLEAR ALL CUTS
 
